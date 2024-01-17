@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+{%load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>electron-LMS</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+     <!-- Google Web Fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+ 
+     <!-- Icon Font Stylesheet -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+ 
+     <!-- Libraries Stylesheet -->
+     <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+     <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+ 
+     <!-- Customized Bootstrap Stylesheet -->
+     <link href="{% static 'CSS/bootstrap.min.css' %}" rel="stylesheet">
+ 
+     <!-- Template Stylesheet -->
+     <link href="{% static 'CSS/style.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+<script type="text/javascript">
+    var user = '{{request.user}}'
+      function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + "=")) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+    </script>
+</head>
+<style>
+.videofile{
+    width: 150px;
+    height: 100px;
+}
+#formdiv{
+    display: none ;
+}
+#formdiv2{
+    display: none ;
+}
+body{
+
+background:#E6E6FA    
+}
+.card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+
+.avatar-md {
+    height: 5rem;
+    width: 5rem;
+}
+
+.fs-19 {
+    font-size: 19px;
+}
+
+.primary-link {
+    color: #314047;
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
+}
+
+a {
+    color: #02af74;
+    text-decoration: none;
+}
+
+.bookmark-post .favorite-icon a, .job-box.bookmark-post .favorite-icon a {
+    background-color: #da3746;
+    color: #fff;
+    border-color: danger;
+}
+.favorite-icon a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #eff0f2;
+    border-radius: 6px;
+    color: rgba(173,181,189,.55);
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
+}
+
+
+.candidate-list-box .favorite-icon {
+    position: absolute;
+    right: 22px;
+    top: 22px;
+}
+.fs-14 {
+    font-size: 14px;
+}
+.bg-soft-secondary {
+    background-color: rgba(116,120,141,.15)!important;
+    color: #74788d!important;
+}
+
+.mt-1 {
+    margin-top: 0.25rem!important;
+}
+
+</style>
+
+
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <a href="" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <h2 class="m-0 text-dark"> <img src="/static/images/Logo-removebg.png" alt="Logo" width="45" height="44" class="d-inline-block align-text-middle">
+            ELECTRON</h2>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="{% url 'teacherhomepage' %}" class="nav-item nav-link active text-dark">Home</a>  
+            <a href="{% url 'teacherprofile' %}" class="nav-item nav-link active text-dark">Profile</a>
+            <a href="/yourcourses/{{teacher.id}}/" class="nav-item nav-link active text-dark">Your Courses</a> 
+        
+            <a href="{% url 'teacherdashboard' %}" class="nav-item nav-link active text-dark">Dashboard</a> 
+        </div>
+        
+        <a href="{% url 'logout' %}" class="btn btn-success py-4 px-lg-5 d-none d-lg-block">Logout<i class="fa fa-arrow-right ms-3"></i></a>
+    </div>
+  </nav>
+<!-- Page Content -->
+<div class="container" >
+
+    <!-- Page Heading -->
+    <h1 class="" style="margin-top: 80px;">Edit Course Chapters
+    </h1>
+
+    <!-- Project One -->
+    <div class="row">
+      <div class="col-md-5">
+        <a href="#">
+          <img class="img-fluid rounded mb-3 mb-md-0" src="{{course.displayimage.url}}" alt="">
+        </a>
+      </div>
+      <div class="col-md-5">
+        <h3>{{course.name}}</h3>
+        <p>{{course.description}}</p>
+        
+        <a class="btn btn-primary" onclick="displayhidden()" href="#">Add chapter</a>
+
+      </div>
+      <div id = "formdiv">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+           
+        <h2>Chapter Topic: {{coursechapterform.topic}}</h2>
+        <h2>Chapter introduction: {{coursechapterform.introduction}}</h2>
+        <h2>Chapter Body: {{coursechapterform.body}}</h2>
+        <input onclick="displayhidden()" type="submit" value="Submit">
+        
+        <!-- additional row for courseinstance-->
+        <input type="hidden" name="course" id="course" value="{{course.id}}">
+        </form>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <hr>
+    {% for message in messages %}
+    {%if "success" in message.tags %}
+         <p class="messages alert alert-success" style="text-align: center;">  {{message}} </p> 
+    {% elif "warning" in message.tags %}
+         <p class="messages alert alert-warning" style="text-align: center;">  {{message}} </p> 
+      {% endif %} 
+         {% endfor %}
+   
+
+
+  </div>
+
+  <section class="section" style="margin-bottom: 50px;">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-12">
+             
+                <div class="candidate-list">
+                    {% for chapters in chapter %}
+                    <div class="candidate-list-box card mt-4">
+                        <div class="p-4 card-body">
+                            <div class="align-items-center row">
+                                <div class="col-auto">
+                                    <div class="candidate-list-images">
+                                        <a href="#"><img src="{{course.displayimage.url}}" alt="" class="avatar-md img-thumbnail rounded-circle" /></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="candidate-list-content mt-3 mt-lg-0">
+                                        <h5 class="fs-19 mb-0">
+                                            <a class="primary-link" href="#">{{chapters.topic}} </a><span class="badge bg-warning ms-1"><i class="mdi mdi-star align-middle"></i>3.9</span>
+                                        </h5>
+                                        <div>
+                                           
+                                        <p class="text-muted mb-2">{{chapters.introduction}}</p>
+                                        <div>
+                                       
+                                    </div>
+                                    </div>
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="mt-2 mt-lg-0 d-flex flex-wrap align-items-start gap-1">
+                                        {% for videos in video %}
+                                        {% if chapters.id == videos.coursechapter.id %}
+                                        <span class="badge bg-soft-secondary fs-14 mt-1"><video controls class="videofile"><source src="{{ videos.videofile.url }}"></video></span>
+                                        {% endif %}
+                                        {% endfor %}
+                                        
+                                    </div>
+                                    <div class="mt-2 mt-lg-0 d-flex flex-wrap justify-content-end gap-1">
+                                        <button  
+                                        type="button" onclick="displayhidden2()" class="btn btn-primary btn-sm" >Add video</button>
+                                        <a href="{% url 'createquiz' chapters.id %}"><button class="btn btn-success btn-sm">Create Quiz</button></a>
+                                        <a href="{% url 'deletechapter' chapters.id course.id %}"><button class="btn btn-danger btn-sm">Delete</button></a>
+                                    </div>
+                         
+                                </div>
+                            </div>
+                            <div id = "formdiv2">
+                                <form action="{% url 'addvideo' chapters.id %}"  method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                   
+                
+                                <h2>Video Title: {{videoform.name}}</h2>
+                                <h2>VideoFIle: {{videoform.videofile}}</h2>
+                                <input type="submit" value="Submit">
+                                
+                                <!-- additional row for courseinstance-->
+                                <input type="hidden" name="coursechapter" id="coursechapter" value="{{chapters.id}}">
+                                <input type="hidden" name="courseid" pk="courseid" value="{{course.id}}">
+                                </form>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function displayhidden(){
+        var x = document.getElementById("formdiv");
+        if (x.style.display === "none"){
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+    function displayhidden2(){
+        var x = document.getElementById("formdiv2");
+        if (x.style.display === "none"){
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+   <!-- JavaScript Libraries -->
+   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="lib/wow/wow.min.js"></script>
+   <script src="lib/easing/easing.min.js"></script>
+   <script src="lib/waypoints/waypoints.min.js"></script>
+   <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+   <!-- Template Javascript -->
+   <script src="js/main.js"></script>
+
+ </body>

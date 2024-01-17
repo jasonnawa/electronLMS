@@ -1,0 +1,43 @@
+{% extends 'studentindex.html' %}
+{% load static %} 
+{% block content %}
+<style>
+    body{
+    
+    background:#E6E6FA ;    
+    }
+    </style>
+    
+<div class="container">
+        
+    <div class="card-columns" style="margin-top: 40px;;">
+        <div class="card" style="border:5px black solid">
+            
+            <div class="card-body">
+                <h5 class="card-title">Score: {{score}}</h5>
+                <hr>
+ 
+                <p class="card-text">Percentage: {{percent}}%</p>
+                <p class="card-text">Time Taken: {{time}} seconds</p>
+                <p class="card-text">Correct answers: {{correct}}</p>
+                <p class="card-text">Incorrect answers: {{wrong}}</p>
+                <p class="card-text">Total questions: {{total}}</p>
+                <hr>
+                   {% if percent < 75 %}
+
+                <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 74%;" aria-valuenow="{{score}}" aria-valuemin="0" aria-valuemax="100">Not Enough</div>
+                  </div>
+                <h5>You need above 75% to pass</h5>
+                <h5>All the best for next quiz!</h5>
+                {% else %}
+                <h5>You Pass, Chapter Complete!</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+ <a href = "{% url 'chapterdetails' coursechapter course.id %}">
+    <button class="btn btn-primary" style="margin-top: 20px;">back</button></a>
+</div>
+ 
+{% endblock %}

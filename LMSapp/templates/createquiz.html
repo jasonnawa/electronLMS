@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+ 
+{% block content %}
+<style>
+    body{
+    padding-top:40px;
+    background:#E6E6FA ;    
+    }
+    </style>
+    
+<div class="container">
+    <h3>Add Question</h3>
+    <div class="row">
+        
+        <div class="form-group">
+          
+                <form action=""  method="post">
+                    {% csrf_token %}
+
+                <h4>Question: {{form.question}}</h4>
+                <h4>Option 1: {{form.op1}}</h4>
+                <h4>Option 2: {{form.op2}}</h4>
+                <h4>Option 3: {{form.op3}}</h4>
+                <h4>Option 4: {{form.op4}}</h4>
+                <h4>Answer: {{form.ans}}</h4>
+
+                <input type="submit" value="Submit">
+                
+                <!-- additional row for courseinstance-->
+                <input type="hidden" name="chapter" id="chapter" value="{{chapter.id}}">
+                </form>
+              
+            <hr>
+        
+            </div>
+        </div>
+      
+   
+    <div class="row">
+        <div class="col">
+        <h3>QUESTIONS:</h3>
+        {% for questions in question %}
+        <h3>{{forloop.counter}}.&nbsp;{{questions.question}}<a href="{% url 'deletequestion' questions.id chapter.id %}"><button>Delete</button></a></h3>
+        {% endfor %}
+    </div>
+    </div>
+
+
+</div>
+{% endblock %}

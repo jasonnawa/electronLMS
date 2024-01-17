@@ -1,0 +1,156 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>eLEARNING - eLearning HTML Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries Stylesheet -->
+  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="{% static 'CSS/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Template Stylesheet -->
+  <link href="{% static 'CSS/style.css' %}" rel="stylesheet">
+<style>
+  
+  body{
+background:#eee;
+}
+.card {
+    box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+.avatar.sm {
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: .818125rem;
+}
+.table-nowrap .table td, .table-nowrap .table th {
+    white-space: nowrap;
+}
+.table>:not(caption)>*>* {
+    padding: 0.75rem 1.25rem;
+    border-bottom-width: 1px;
+}
+table th {
+    font-weight: 600;
+    background-color: #eeecfd !important;
+}
+</style>
+</head>
+<body>
+
+
+
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <a href="" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <h2 class="m-0 text-dark"> <img src="/static/images/Logo-removebg.png" alt="Logo" width="45" height="44" class="d-inline-block align-text-middle">
+            ELECTRON</h2>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="{% url 'teacherhomepage' %}" class="nav-item nav-link active text-dark">HOME</a>  
+            <a href="{% url 'teacherprofile' %}" class="nav-item nav-link active text-dark">PROFILE</a>
+            <a href="/yourcourses/{{teacher.id}}/" class="nav-item nav-link active text-dark">YOUR COURSES</a> 
+        
+            <a href="{% url 'teacherdashboard' %}" class="nav-item nav-link active text-dark">DASHBOARD</a> 
+        </div>
+        
+        <a href="{% url 'logout' %}" class="btn btn-success py-4 px-lg-5 d-none d-lg-block">Logout<i class="fa fa-arrow-right ms-3"></i></a>
+    </div>
+  </nav>
+  
+
+<div class="container" style="margin-top: 50px;"> 
+    {% for message in messages %}
+    {%if "success" in message.tags %}
+         <p class="messages alert alert-success" style="text-align: center;">  {{message}} </p> 
+    {% elif "warning" in message.tags %}
+         <p class="messages alert alert-warning" style="text-align: center;">  {{message}} </p> 
+      {% endif %} 
+         {% endfor %}
+    <div class="row">
+        <div class="col-12 mb-3 mb-lg-5">
+            <div class="overflow-hidden card table-nowrap table-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Your Courses</h5>
+                    <a href="{% url 'coursecreationpage' %}" class="btn btn-success btn-sm">create course</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead class="small text-uppercase bg-body text-muted">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Country</th>
+                                <th> Enrolled students</th>
+                                <th>Created Date</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          {% for courses in course %}
+                            <tr class="align-middle">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{courses.displayimage.url}}"width="65px" height="65px" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
+                                        <div>
+                                            <div class="h6 mb-0 lh-1">{{courses.name}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{teacher.user.email}}</td>
+                                <td>
+                                    <span class="d-inline-block align-middle">Usa</span>
+                                </td>
+                                <td><span>{{courses.enrolledstudents}}</span></td>
+                                <td>{{courses.created_time}}</td>
+                                <td class="text-end">
+                                    <div class="drodown">
+                                        <a data-bs-toggle="dropdown" href="#" class="btn p-1">
+                                  <i class="fa fa-bars" aria-hidden="true"></i>
+                                </a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a href="/editcourse/{{courses.id}}/" class="dropdown-item">View Details</a>
+                                            <a href=" {% url 'deletecourse2' courses.id teacher.id %}" class="dropdown-item">Delete course</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+</body>
+</html>

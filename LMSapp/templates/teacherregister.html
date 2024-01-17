@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{%load static %}
+{% block content %}
+<style>
+    body{
+    padding-top:40px;
+    background:#E6E6FA ;    
+    }
+
+</style>
+
+<div class="container" style="margin-top:65px;">
+    <h3 id="form-title">CREATE TEACHER ACCOUNT</h3>
+    <hr>
+    <div class="form-group">
+        <form action="" method="post">
+            {% csrf_token %}
+            <p>Firstname:{{form.first_name}}</p>
+            <p>lastname:{{form.last_name}}</p>
+            <p>Username:{{form.username}}</p>
+            <p>Email:{{form.email}}</p>
+            <p>password:{{form.password1}}</p>
+            <p>password:{{form.password2}}</p>
+    </div>
+
+    <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock %}
